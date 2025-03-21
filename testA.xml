@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<MatrixMxN xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <m>4</m>
+  <n>3</n>
+  <matrixRows>
+    <MatrixCol>
+      <Cols>
+        <double>25</double>
+        <double>125</double>
+        <double>125</double>
+      </Cols>
+    </MatrixCol>
+    <MatrixCol>
+      <Cols>
+        <double>25</double>
+        <double>32</double>
+        <double>32</double>
+      </Cols>
+    </MatrixCol>
+    <MatrixCol>
+      <Cols>
+        <double>125</double>
+        <double>127.8</double>
+        <double>125</double>
+      </Cols>
+    </MatrixCol>
+    <MatrixCol>
+      <Cols>
+        <double>125</double>
+        <double>33.8</double>
+        <double>32</double>
+      </Cols>
+    </MatrixCol>
+  </matrixRows>
+</MatrixMxN>
