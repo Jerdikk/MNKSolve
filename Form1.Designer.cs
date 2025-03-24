@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.T1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.R10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.R1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -36,15 +39,13 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.T1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.R10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.R1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,6 +60,24 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(648, 276);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // T1
+            // 
+            this.T1.HeaderText = "T1";
+            this.T1.Name = "T1";
+            this.T1.Width = 60;
+            // 
+            // R10
+            // 
+            this.R10.HeaderText = "R10";
+            this.R10.Name = "R10";
+            this.R10.Width = 60;
+            // 
+            // R1
+            // 
+            this.R1.HeaderText = "R1";
+            this.R1.Name = "R1";
+            this.R1.Width = 60;
             // 
             // label1
             // 
@@ -118,27 +137,9 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // T1
-            // 
-            this.T1.HeaderText = "T1";
-            this.T1.Name = "T1";
-            this.T1.Width = 60;
-            // 
-            // R10
-            // 
-            this.R10.HeaderText = "R10";
-            this.R10.Name = "R10";
-            this.R10.Width = 60;
-            // 
-            // R1
-            // 
-            this.R1.HeaderText = "R1";
-            this.R1.Name = "R1";
-            this.R1.Width = 60;
-            // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(585, 345);
+            this.button2.Location = new System.Drawing.Point(456, 347);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 8;
@@ -148,7 +149,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(585, 380);
+            this.button3.Location = new System.Drawing.Point(456, 382);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 9;
@@ -176,11 +177,22 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(456, 411);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 38);
+            this.button4.TabIndex = 12;
+            this.button4.Text = "Общий случай";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(675, 461);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.button3);
@@ -220,6 +232,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button button4;
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -38,60 +39,113 @@ namespace MNKSolve
             MatrixMxN a = new MatrixMxN(gg1, 3);
             MatrixMxN b = new MatrixMxN(gg1, 1);
 
-            double t1;
-            double r10;
-            double r1;
+            double t1=0.0;
+            double r10=0.0;
+            double r1 = 0.0;
             for (int i = 0; i < gg1; i++)
             {
-                if (dataGridView1.Rows[i].Cells[0].Value.GetType() == typeof(double))
+                try
                 {
-                    t1 = (double)dataGridView1.Rows[i].Cells[0].Value;
+                    if (dataGridView1.Rows[i].Cells[0].Value.GetType() == typeof(double))
+                    {
+                        t1 = (double)dataGridView1.Rows[i].Cells[0].Value;
+                    }
+                    else
+                    {
+                        t1 = GeoLogUtils.mTryParse((string)dataGridView1.Rows[i].Cells[0].Value);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    t1 = GeoLogUtils.mTryParse((string)dataGridView1.Rows[i].Cells[0].Value);
+                    Debug.WriteLine(ex.Message);
                 }
-                if (dataGridView1.Rows[i].Cells[1].Value.GetType() == typeof(double))
+                try
                 {
-                    r10 = (double)dataGridView1.Rows[i].Cells[1].Value;
-                }
-                else
-                    r10 = GeoLogUtils.mTryParse((string)dataGridView1.Rows[i].Cells[1].Value);
-                if (dataGridView1.Rows[i].Cells[2].Value.GetType() == typeof(double))
-                {
-                    r1 = (double)dataGridView1.Rows[i].Cells[2].Value;
-                }
-                else
-                    r1 = GeoLogUtils.mTryParse((string)dataGridView1.Rows[i].Cells[2].Value);
 
+
+                    if (dataGridView1.Rows[i].Cells[1].Value.GetType() == typeof(double))
+                    {
+                        r10 = (double)dataGridView1.Rows[i].Cells[1].Value;
+                    }
+                    else
+                        r10 = GeoLogUtils.mTryParse((string)dataGridView1.Rows[i].Cells[1].Value);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+                try
+                {
+                    if (dataGridView1.Rows[i].Cells[2].Value.GetType() == typeof(double))
+                    {
+                        r1 = (double)dataGridView1.Rows[i].Cells[2].Value;
+                    }
+                    else
+                        r1 = GeoLogUtils.mTryParse((string)dataGridView1.Rows[i].Cells[2].Value);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
                 a.Set(i, 0, t1);
                 a.Set(i, 1, t1 * r10);
                 a.Set(i, 2, 1.0);
                 b.Set(i, 0, r1 - r10);
-            }           
+            }
 
             MatrixMxN At1 = MatrixMxN.Transponse(a);
+            if (At1 == null)
+            {
+                MessageBox.Show("Решений нет!");
+                return;
+            }
+
 
             MatrixMxN mul1 = MatrixMxN.Mul(At1, a);
+            if (mul1 == null)
+            {
+                MessageBox.Show("Решений нет!");
+                return;
+            }
 
             MatrixMxN obrA = MatrixMxN.ObratNaya(mul1);
+            if (obrA == null)
+            {
+                MessageBox.Show("Решений нет!");
+                return;
+            }
 
             MatrixMxN temp1 = MatrixMxN.Mul(obrA, At1);
-
+            if (temp1 == null)
+            {
+                MessageBox.Show("Решений нет!");
+                return;
+            }
             MatrixMxN res = MatrixMxN.Mul(temp1, b);
-
+            if (res == null)
+            {
+                MessageBox.Show("Решений нет!");
+                return;
+            }
             textBox1.Text = res.Get(0, 0).ToString();
             textBox2.Text = res.Get(1, 0).ToString();
             textBox3.Text = res.Get(2, 0).ToString();
 
+            MessageBox.Show("Решено!");
 
             int hh = 1;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            int gg1 = dataGridView1.Rows.Count - 1;
+            if (gg1 < 3)
+            {
+                MessageBox.Show("Введите более 3 строк значений");
+                return;
+            }
 
-          //  SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            //  SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
             saveFileDialog1.FilterIndex = 1;
             saveFileDialog1.RestoreDirectory = true;
@@ -101,10 +155,8 @@ namespace MNKSolve
             // получаем выбранный файл
             string filename = saveFileDialog1.FileName;
 
-            int gg1 = dataGridView1.Rows.Count - 1;
-            if (gg1 < 3) MessageBox.Show("Введите более 3 строк значений");
             MatrixMxN a = new MatrixMxN(gg1, 3);
-            MatrixMxN b = new MatrixMxN(gg1, 1);
+            // MatrixMxN b = new MatrixMxN(gg1, 1);
             double t1;
             double r10;
             double r1;
@@ -133,7 +185,7 @@ namespace MNKSolve
                     r1 = GeoLogUtils.mTryParse((string)dataGridView1.Rows[i].Cells[2].Value);
                 a.Set(i, 0, t1);
                 a.Set(i, 1, r10);
-                a.Set(i, 2, r1);                
+                a.Set(i, 2, r1);
             }
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(MatrixMxN));
@@ -141,9 +193,9 @@ namespace MNKSolve
             // получаем поток, куда будем записывать сериализованный объект
             using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
             {
-                xmlSerializer.Serialize(fs, a);                
+                xmlSerializer.Serialize(fs, a);
                 Console.WriteLine("Object has been serialized");
-            }         
+            }
 
         }
 
@@ -174,6 +226,12 @@ namespace MNKSolve
 
             }
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Form2 form = new Form2();
+            form.ShowDialog();
         }
     }
 }
